@@ -9,8 +9,16 @@ export class AuthController {
   ){}
 
   @Post('/signup')
-  signUp(@Body(ValidationPipe) authCredentialsDot : AuthCredentialsDto) : Promise<void> {
-    return this.authService.singUp(authCredentialsDot);
+  signUp(
+    @Body(ValidationPipe) authCredentialsDto : AuthCredentialsDto
+    ) : Promise<void> {
+    return this.authService.singUp(authCredentialsDto);
   }
 
+  @Post('/singin')
+  signIn(
+    @Body(ValidationPipe) authCredentialsDto : AuthCredentialsDto
+    ) : Promise<{accessToken: string}> {
+      return this.authService.signIn(authCredentialsDto);
+    }
 }
