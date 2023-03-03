@@ -1,10 +1,8 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import {BoardStatus } from './board-status.enum';
-import { v1 as uuid} from 'uuid';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { Board } from './board.entity';
-import { Repository } from 'typeorm';
-import { BoardRepository } from './board.providers';
+import { BoardRepository } from './board.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
