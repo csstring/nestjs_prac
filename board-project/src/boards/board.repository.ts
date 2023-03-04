@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { User } from "src/auth/user.entity";
 import { Repository } from "typeorm";
 import { BoardStatus } from "./board-status.enum";
 import { Board } from "./board.entity";
@@ -14,28 +15,20 @@ export class BoardRepository extends Repository<Board> {
       super(repository.target, repository.manager, repository.queryRunner);
     }
 
-  async createBoard(createBoardDto : CreateBoardDto) : Promise<Board> {
+  async createBoard(
+    createBoardDto : CreateBoardDto,
+    user : User
+    ) : Promise<Board> {
     const {title, description} = createBoardDto;
   
     const board = this.create({
       title : title,
       description: description,
       status : BoardStatus.PUBLIC,
+      user,
     })
 
     await this.save(board);
     return board;
   }
-   // 원하는 메서드 알아서 작성
 }
-/*
-import { DataSource } from 'typeorm';
-import { Board } from './board.entity';
-
-export const boardProviders = [
-  {
-    provide: 'BOARD_REPOSITORY',
-    useFactory: (dataSource: DataSource) => dataSource.getRepository(Board),
-    inject: ['DATA_SOURCE'],
-  },
-];*/
